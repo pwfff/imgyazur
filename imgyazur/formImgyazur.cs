@@ -135,7 +135,7 @@ namespace imgyazur
             WebClient webClient = new WebClient();
 
             NameValueCollection parameters = new NameValueCollection();
-            parameters.Add("key", insertApiKeyHere);
+            parameters.Add("key", Properties.Settings.Default.key);
             parameters.Add("type", "base64");
             parameters.Add("image", base64Image);
 
@@ -146,7 +146,9 @@ namespace imgyazur
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while uploading the image.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Properties.Settings.Default.key = "";
+                Properties.Settings.Default.Save();
+                MessageBox.Show("An error occurred while uploading the image. Your API key has been reset.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -213,8 +215,4 @@ public class Links
     public string large_thumbnail { get; set; }
 }
 
-<<<<<<< HEAD
 #endregion
-=======
-#endregion
->>>>>>> 1ee57ea41216fdcd4a368c95770d84d559d1940c

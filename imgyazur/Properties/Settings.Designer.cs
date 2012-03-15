@@ -22,5 +22,17 @@ namespace imgyazur.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string key {
+            get {
+                return ((string)(this["key"]));
+            }
+            set {
+                this["key"] = value;
+            }
+        }
     }
 }
