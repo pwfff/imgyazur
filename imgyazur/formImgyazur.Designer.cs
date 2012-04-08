@@ -41,6 +41,7 @@
             this.Name = "formImgyazur";
             this.Opacity = 0.01D;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "imgyazur";
             this.Deactivate += new System.EventHandler(this.formImgyazur_Deactivate);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.formImgyazur_KeyDown);
