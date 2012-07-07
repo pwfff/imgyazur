@@ -1,7 +1,7 @@
 imgyazur
 ========
 
-imgyazur is a clone of gyazo that uploads the image to imgur.com, rather than the ugly, ad-infested gyazo website.
+imgyazur is a clone of gyazo that uploads the image to imgur.com rather than the ugly, ad-infested gyazo website.
 
 Usage
 -----
@@ -13,4 +13,4 @@ Usage
 Compiling
 ---------
 
-If you don't have an apikey.cs with a 'public static string key =', *you're gonna have a bad time*.
+If you don't have an apikey.cs with a 'public static string key =', **you're gonna have a bad time**.
