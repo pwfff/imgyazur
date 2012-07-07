@@ -164,7 +164,7 @@ namespace imgyazur
             {
                 photos = (ImgurUploadResponse)jsonSerializer.ReadObject(new MemoryStream(responseArray));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("An error occurred while processing the response from imgur.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
