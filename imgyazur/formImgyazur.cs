@@ -145,7 +145,7 @@ namespace imgyazur
                     }
                 }
              */
-            parameters.Add("key", apikey.apikey);
+            parameters.Add("key", apikey.key);
             parameters.Add("type", "base64");
             parameters.Add("image", base64Image);
 
@@ -154,7 +154,7 @@ namespace imgyazur
             {
                 responseArray = webClient.UploadValues("http://api.imgur.com/2/upload.json", parameters);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("An error occurred while uploading the image. Oops.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;

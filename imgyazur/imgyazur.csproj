@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="apikey.cs" />
     <Compile Include="formCaptureArea.cs">
       <SubType>Form</SubType>
     </Compile>
