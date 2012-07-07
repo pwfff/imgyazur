@@ -124,7 +124,7 @@ namespace imgyazur
             // a new 0,0 point for the destination, and the captureArea size for the size
             captureGraphics.CopyFromScreen(captureArea.Location, new Point(), captureArea.Size);
 
-            // get the base64 encoding of the image bytes, encoded in JPEG
+            // get the base64 encoding of the image bytes, encoded in PNG
             String base64Image;
             using (MemoryStream memoryStream = new MemoryStream())
             {
