@@ -135,7 +135,17 @@ namespace imgyazur
             WebClient webClient = new WebClient();
 
             NameValueCollection parameters = new NameValueCollection();
-            parameters.Add("key", Properties.Settings.Default.key);
+            //if this doesn't compile, add an apikey.cs:
+            /* 
+                namespace imgyazur
+                {
+                    class apikey
+                    {
+                        string apikey = "xxx"
+                    }
+                }
+             */
+            parameters.Add("key", apikey.apikey);
             parameters.Add("type", "base64");
             parameters.Add("image", base64Image);
 
@@ -146,9 +156,7 @@ namespace imgyazur
             }
             catch (Exception ex)
             {
-                Properties.Settings.Default.key = "";
-                Properties.Settings.Default.Save();
-                MessageBox.Show("An error occurred while uploading the image. Your API key has been reset.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("An error occurred while uploading the image. Oops.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

@@ -16,16 +16,7 @@ namespace imgyazur
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            if (String.IsNullOrEmpty(Properties.Settings.Default.key))
-            {
-                Properties.Settings.Default.key = Microsoft.VisualBasic.Interaction.InputBox("Please insert your imgur API key:", "Missing Imgur API Key");
-                Properties.Settings.Default.Save();
-            }
-
-            if (String.IsNullOrEmpty(Properties.Settings.Default.key))
-                MessageBox.Show("An imgur API key is required for this program to run.", "Unable To Run");
-            else
-                Application.Run(new formImgyazur());
+            Application.Run(new formImgyazur());
         }
     }
 }
