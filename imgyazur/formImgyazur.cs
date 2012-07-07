@@ -141,7 +141,7 @@ namespace imgyazur
                 {
                     class apikey
                     {
-                        string apikey = "xxx"
+                        public static string apikey = "xxx"
                     }
                 }
              */
