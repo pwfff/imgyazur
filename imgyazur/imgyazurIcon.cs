@@ -19,14 +19,6 @@ namespace imgyazur
 
         private ImgyazurIcon()
         {
-            this.notifyIcon = new NotifyIcon();
-            this.notifyIcon.BalloonTipText = "imgyazur";
-            this.notifyIcon.Text = "imgyazur";
-            this.notifyIcon.Visible = true;
-            this.notifyIcon.Icon = Properties.Resources.imgur;
-            this.notifyIcon.ContextMenuStrip = this.contextMenuStrip;
-            this.notifyIcon.MouseClick += new MouseEventHandler(notifyIcon_MouseClick);
-
             this.contextMenuStrip = new ContextMenuStrip();
             this.contextMenuStrip.SuspendLayout();
 
@@ -34,6 +26,7 @@ namespace imgyazur
             this.exitMenuItem.Name = "exitMenuItem";
             this.exitMenuItem.Size = new Size(156, 22);
             this.exitMenuItem.Text = "Exit";
+            this.exitMenuItem.Click += new EventHandler(exitMenuItem_Click);
 
             this.changeHotkeyMenuItem = new ToolStripMenuItem();
             this.changeHotkeyMenuItem.Name = "changeHotkeyMenuItem";
@@ -45,17 +38,30 @@ namespace imgyazur
             this.contextMenuStrip.Size = new Size(157, 70);
 
             this.contextMenuStrip.ResumeLayout(false);
+
+            this.notifyIcon = new NotifyIcon();
+            this.notifyIcon.BalloonTipText = "imgyazur";
+            this.notifyIcon.Text = "imgyazur";
+            this.notifyIcon.Visible = true;
+            this.notifyIcon.Icon = Properties.Resources.imgur;
+            this.notifyIcon.DoubleClick += new EventHandler(notifyIcon_DoubleClick);
+            this.notifyIcon.ContextMenuStrip = this.contextMenuStrip;
+        }
+
+        void exitMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        void notifyIcon_DoubleClick(object sender, EventArgs e)
+        {
+            formImgyazur imgyazurForm = new formImgyazur();
+            imgyazurForm.ShowDialog();
         }
 
         public static ImgyazurIcon GetIcon()
         {
             return imgyazurIcon;
-        }
-
-        void notifyIcon_MouseClick(object sender, MouseEventArgs e)
-        {
-            formImgyazur imgyazurForm = new formImgyazur();
-            imgyazurForm.Show();
         }
     }
 }

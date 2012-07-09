@@ -64,20 +64,29 @@ namespace imgyazur
                           .Aggregate(Rectangle.Union);
         }
 
+        private void Die()
+        {
+            captureForm.Dispose();
+            Dispose();
+        }
+
         private void formImgyazur_Deactivate(object sender, EventArgs e)
         {
-            Dispose();
+            Die();
         }
 
         private void formImgyazur_KeyDown(object sender, KeyEventArgs e)
         {
-            Dispose();
+            Die();
         }
 
         private void formImgyazur_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != System.Windows.Forms.MouseButtons.Left)
-                Dispose();
+            {
+                Die();
+                return;
+            }
 
             captureStartPoint = e.Location;
 
@@ -112,7 +121,7 @@ namespace imgyazur
                 Cursor = Cursors.Default;
             }
 
-            Dispose();
+            Die();
         }
 
         private void uploadImage()
@@ -139,33 +148,42 @@ namespace imgyazur
                 base64Image = Convert.ToBase64String(memoryStream.GetBuffer());
             }
 
-            WebClient webClient = new WebClient();
-
-            NameValueCollection parameters = new NameValueCollection();
-            //if this doesn't compile, add an apikey.cs:
-            /* 
-                namespace imgyazur
-                {
-                    class apikey
-                    {
-                        public static string apikey = "xxx"
-                    }
-                }
-             */
-            parameters.Add("key", apikey.key);
-            parameters.Add("type", "base64");
-            parameters.Add("image", base64Image);
+            captureBitmap.Dispose();
+            captureGraphics.Dispose();
 
             byte[] responseArray;
-            try
+            using (WebClient webClient = new WebClient())
             {
-                responseArray = webClient.UploadValues("http://api.imgur.com/2/upload.json", parameters);
+
+                NameValueCollection parameters = new NameValueCollection();
+                //if this doesn't compile, add an apikey.cs:
+                /* 
+                    namespace imgyazur
+                    {
+                        class apikey
+                        {
+                            public static string apikey = "xxx"
+                        }
+                    }
+                 */
+                parameters.Add("key", apikey.key);
+                parameters.Add("type", "base64");
+                parameters.Add("image", base64Image);
+
+                try
+                {
+                    responseArray = webClient.UploadValues("http://api.imgur.com/2/upload.json", parameters);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("An error occurred while uploading the image. Oops.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                parameters = null;
             }
-            catch (Exception)
-            {
-                MessageBox.Show("An error occurred while uploading the image. Oops.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+
+            base64Image = null;
 
 #if DEBUG
             // this might help debugging in case the frickin API ever breaks the responses
@@ -173,7 +191,7 @@ namespace imgyazur
 #endif
 
             DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(ImgurUploadResponse));
-
+            
             ImgurUploadResponse photos = null;
             try
             {
