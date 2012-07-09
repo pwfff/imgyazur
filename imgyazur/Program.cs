@@ -16,7 +16,9 @@ namespace imgyazur
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new formImgyazur());
+            ImgyazurIcon icon = ImgyazurIcon.GetIcon();
+            Application.Run();
+            icon = null;
         }
     }
 }

@@ -66,18 +66,18 @@ namespace imgyazur
 
         private void formImgyazur_Deactivate(object sender, EventArgs e)
         {
-            Application.Exit();
+            Dispose();
         }
 
         private void formImgyazur_KeyDown(object sender, KeyEventArgs e)
         {
-            Application.Exit();
+            Dispose();
         }
 
         private void formImgyazur_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != System.Windows.Forms.MouseButtons.Left)
-                Application.Exit();
+                Dispose();
 
             captureStartPoint = e.Location;
 
@@ -101,9 +101,18 @@ namespace imgyazur
 
         private void formImgyazur_MouseUp(object sender, MouseEventArgs e)
         {
-            uploadImage();
+            Cursor = Cursors.WaitCursor;
 
-            Application.Exit();
+            try
+            {
+                uploadImage();
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
+
+            Dispose();
         }
 
         private void uploadImage()
@@ -114,8 +123,6 @@ namespace imgyazur
             // if we don't do this, the image turns out ugly and grey... duh
             captureForm.Opacity = 0;
             Opacity = 0;
-
-            Cursor = Cursors.WaitCursor;
 
             Bitmap captureBitmap = new Bitmap(captureArea.Width, captureArea.Height);
             Graphics captureGraphics = Graphics.FromImage(captureBitmap);

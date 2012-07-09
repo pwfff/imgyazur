@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>imgur.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\imgur.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
@@ -67,6 +67,7 @@
     <Compile Include="formImgyazur.Designer.cs">
       <DependentUpon>formImgyazur.cs</DependentUpon>
     </Compile>
+    <Compile Include="imgyazurIcon.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="formCaptureArea.resx">
@@ -97,7 +98,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="imgur.ico" />
+    <Content Include="Resources\imgur.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

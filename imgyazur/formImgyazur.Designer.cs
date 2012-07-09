@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.SuspendLayout();
             // 
             // formImgyazur
@@ -49,7 +50,6 @@
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.formImgyazur_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.formImgyazur_MouseUp);
             this.ResumeLayout(false);
-
         }
 
         #endregion
