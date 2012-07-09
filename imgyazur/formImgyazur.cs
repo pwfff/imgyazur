@@ -20,6 +20,9 @@ namespace imgyazur
     {
         #region Data
 
+        private static string apiUriString = "http://api.imgur.com/2/upload.json";
+        private static Uri apiUri = new Uri(apiUriString);
+
         private Form captureForm = new formCaptureArea();
         private Point captureStartPoint;
         private Rectangle captureArea = new Rectangle();
@@ -64,15 +67,15 @@ namespace imgyazur
                           .Aggregate(Rectangle.Union);
         }
 
+        private void formImgyazur_Load(object sender, EventArgs e)
+        {
+            BringToFront();
+        }
+
         private void Die()
         {
             captureForm.Dispose();
             Dispose();
-        }
-
-        private void formImgyazur_Deactivate(object sender, EventArgs e)
-        {
-            Die();
         }
 
         private void formImgyazur_KeyDown(object sender, KeyEventArgs e)
@@ -151,9 +154,10 @@ namespace imgyazur
             captureBitmap.Dispose();
             captureGraphics.Dispose();
 
-            byte[] responseArray;
             using (WebClient webClient = new WebClient())
             {
+                webClient.UploadProgressChanged += new UploadProgressChangedEventHandler(webClient_UploadProgressChanged);
+                webClient.UploadValuesCompleted += new UploadValuesCompletedEventHandler(webClient_UploadValuesCompleted);
 
                 NameValueCollection parameters = new NameValueCollection();
                 //if this doesn't compile, add an apikey.cs:
@@ -170,20 +174,17 @@ namespace imgyazur
                 parameters.Add("type", "base64");
                 parameters.Add("image", base64Image);
 
-                try
-                {
-                    responseArray = webClient.UploadValues("http://api.imgur.com/2/upload.json", parameters);
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("An error occurred while uploading the image. Oops.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                webClient.UploadValuesAsync(apiUri, parameters);
 
                 parameters = null;
             }
+        }
 
-            base64Image = null;
+        void webClient_UploadValuesCompleted(object sender, UploadValuesCompletedEventArgs e)
+        {
+            ImgyazurIcon.Instance.notifyIcon.Text = ImgyazurIcon.defaultText;
+
+            byte[] responseArray = e.Result;
 
 #if DEBUG
             // this might help debugging in case the frickin API ever breaks the responses
@@ -191,7 +192,7 @@ namespace imgyazur
 #endif
 
             DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(ImgurUploadResponse));
-            
+
             ImgurUploadResponse photos = null;
             try
             {
@@ -205,6 +206,11 @@ namespace imgyazur
 
             if (photos != null)
                 Process.Start(photos.upload.links.original);
+        }
+
+        void webClient_UploadProgressChanged(object sender, UploadProgressChangedEventArgs e)
+        {
+            ImgyazurIcon.Instance.notifyIcon.Text = "Uploading... " + e.ProgressPercentage.ToString() + "% done.";
         }
     }
 }

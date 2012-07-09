@@ -9,12 +9,24 @@ namespace imgyazur
 {
     class ImgyazurIcon
     {
-        private static readonly ImgyazurIcon imgyazurIcon = new ImgyazurIcon();
+        private static ImgyazurIcon instance = null;
 
-        private NotifyIcon notifyIcon;
+        public static ImgyazurIcon Instance
+        {
+            get
+            {
+                if (ImgyazurIcon.instance == null)
+                    ImgyazurIcon.instance = new ImgyazurIcon();
+                return ImgyazurIcon.instance;
+            }
+        }
+
+
+        public NotifyIcon notifyIcon;
+        public static string defaultText = "imgyazur";
 
         private ContextMenuStrip contextMenuStrip;
-        private ToolStripMenuItem changeHotkeyMenuItem;
+        private ToolStripMenuItem captureImageMenuItem;
         private ToolStripMenuItem exitMenuItem;
 
         private ImgyazurIcon()
@@ -24,44 +36,46 @@ namespace imgyazur
 
             this.exitMenuItem = new ToolStripMenuItem();
             this.exitMenuItem.Name = "exitMenuItem";
-            this.exitMenuItem.Size = new Size(156, 22);
             this.exitMenuItem.Text = "Exit";
             this.exitMenuItem.Click += new EventHandler(exitMenuItem_Click);
 
-            this.changeHotkeyMenuItem = new ToolStripMenuItem();
-            this.changeHotkeyMenuItem.Name = "changeHotkeyMenuItem";
-            this.changeHotkeyMenuItem.Size = new Size(156, 22);
-            this.changeHotkeyMenuItem.Text = "Change Hotkey";
+            this.captureImageMenuItem = new ToolStripMenuItem();
+            this.captureImageMenuItem.Name = "captureImageMenuItem";
+            this.captureImageMenuItem.Text = "Capture Image";
+            this.captureImageMenuItem.Click += new EventHandler(captureImageMenuItem_Click);
 
-            this.contextMenuStrip.Items.AddRange(new ToolStripItem[] { this.changeHotkeyMenuItem, this.exitMenuItem });
+            this.contextMenuStrip.Items.AddRange(new ToolStripItem[] { this.captureImageMenuItem, this.exitMenuItem });
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new Size(157, 70);
 
             this.contextMenuStrip.ResumeLayout(false);
 
             this.notifyIcon = new NotifyIcon();
             this.notifyIcon.BalloonTipText = "imgyazur";
-            this.notifyIcon.Text = "imgyazur";
+            this.notifyIcon.Text = defaultText;
             this.notifyIcon.Visible = true;
             this.notifyIcon.Icon = Properties.Resources.imgur;
-            this.notifyIcon.DoubleClick += new EventHandler(notifyIcon_DoubleClick);
             this.notifyIcon.ContextMenuStrip = this.contextMenuStrip;
+            this.notifyIcon.MouseClick += new MouseEventHandler(notifyIcon_MouseClick);
+        }
+
+        void notifyIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                formImgyazur imgyazurForm = new formImgyazur();
+                imgyazurForm.Show();
+            }
+        }
+
+        void captureImageMenuItem_Click(object sender, EventArgs e)
+        {
+            formImgyazur imgyazurForm = new formImgyazur();
+            imgyazurForm.Show();
         }
 
         void exitMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
-        }
-
-        void notifyIcon_DoubleClick(object sender, EventArgs e)
-        {
-            formImgyazur imgyazurForm = new formImgyazur();
-            imgyazurForm.ShowDialog();
-        }
-
-        public static ImgyazurIcon GetIcon()
-        {
-            return imgyazurIcon;
         }
     }
 }

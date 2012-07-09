@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.SuspendLayout();
             // 
             // formImgyazur
@@ -44,12 +43,13 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "imgyazur";
-            this.Deactivate += new System.EventHandler(this.formImgyazur_Deactivate);
+            this.Load += new System.EventHandler(this.formImgyazur_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.formImgyazur_KeyDown);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.formImgyazur_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.formImgyazur_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.formImgyazur_MouseUp);
             this.ResumeLayout(false);
+
         }
 
         #endregion
