@@ -44,7 +44,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "imgyazur";
             this.Load += new System.EventHandler(this.formImgyazur_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.formImgyazur_KeyDown);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.formImgyazur_KeyPress);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.formImgyazur_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.formImgyazur_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.formImgyazur_MouseUp);

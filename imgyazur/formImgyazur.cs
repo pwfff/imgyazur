@@ -78,7 +78,7 @@ namespace imgyazur
             Dispose();
         }
 
-        private void formImgyazur_KeyDown(object sender, KeyEventArgs e)
+        void formImgyazur_KeyPress(object sender, KeyPressEventArgs e)
         {
             Die();
         }

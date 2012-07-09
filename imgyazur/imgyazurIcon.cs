@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FMUtils.KeyboardHook;
 
 namespace imgyazur
 {
@@ -56,26 +57,37 @@ namespace imgyazur
             this.notifyIcon.Icon = Properties.Resources.imgur;
             this.notifyIcon.ContextMenuStrip = this.contextMenuStrip;
             this.notifyIcon.MouseClick += new MouseEventHandler(notifyIcon_MouseClick);
+
+            Hook KeyboardHook = new Hook("imgyazur keyboard hook");
+            KeyboardHook.KeyDownEvent += GlobalKeyDown;
         }
 
-        void notifyIcon_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                formImgyazur imgyazurForm = new formImgyazur();
-                imgyazurForm.Show();
-            }
-        }
-
-        void captureImageMenuItem_Click(object sender, EventArgs e)
+        void startCapture()
         {
             formImgyazur imgyazurForm = new formImgyazur();
             imgyazurForm.Show();
         }
 
+        void notifyIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+                startCapture();
+        }
+
+        void captureImageMenuItem_Click(object sender, EventArgs e)
+        {
+            startCapture();
+        }
+
         void exitMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        void GlobalKeyDown(KeyboardHookEventArgs e)
+        {
+            if (e.Key == Keys.D && e.isCtrlPressed && e.isAltPressed && e.isShiftPressed)
+                startCapture();
         }
     }
 }

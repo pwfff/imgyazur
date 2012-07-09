@@ -37,6 +37,12 @@
   <PropertyGroup>
     <ApplicationIcon>Resources\imgur.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>imgyazur.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
@@ -87,6 +93,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
+    <None Include="imgyazur.snk" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -99,6 +106,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\imgur.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FMUtils.KeyboardHook\FMUtils.KeyboardHook.csproj">
+      <Project>{32C9D946-D68A-4BEC-9FFF-D978215A5E1D}</Project>
+      <Name>FMUtils.KeyboardHook</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

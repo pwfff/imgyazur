@@ -1,0 +1,3 @@
+[submodule "FMUtils.KeyboardHook"]
+	path = FMUtils.KeyboardHook
+	url = git://github.com/factormystic/FMUtils.KeyboardHook.git
