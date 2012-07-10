@@ -22,6 +22,8 @@ namespace imgyazur
             }
         }
 
+        public KeyComboSettings keyComboSettings = new KeyComboSettings();
+        public KeyCombo keyCombo;
 
         public NotifyIcon notifyIcon;
         public static string defaultText = "imgyazur";
@@ -32,31 +34,33 @@ namespace imgyazur
 
         private ImgyazurIcon()
         {
-            this.contextMenuStrip = new ContextMenuStrip();
-            this.contextMenuStrip.SuspendLayout();
+            contextMenuStrip = new ContextMenuStrip();
+            contextMenuStrip.SuspendLayout();
 
-            this.exitMenuItem = new ToolStripMenuItem();
-            this.exitMenuItem.Name = "exitMenuItem";
-            this.exitMenuItem.Text = "Exit";
-            this.exitMenuItem.Click += new EventHandler(exitMenuItem_Click);
+            exitMenuItem = new ToolStripMenuItem();
+            exitMenuItem.Name = "exitMenuItem";
+            exitMenuItem.Text = "Exit";
+            exitMenuItem.Click += new EventHandler(exitMenuItem_Click);
 
-            this.captureImageMenuItem = new ToolStripMenuItem();
-            this.captureImageMenuItem.Name = "captureImageMenuItem";
-            this.captureImageMenuItem.Text = "Capture Image";
-            this.captureImageMenuItem.Click += new EventHandler(captureImageMenuItem_Click);
+            captureImageMenuItem = new ToolStripMenuItem();
+            captureImageMenuItem.Name = "captureImageMenuItem";
+            captureImageMenuItem.Text = "Capture Image";
+            captureImageMenuItem.Click += new EventHandler(captureImageMenuItem_Click);
 
-            this.contextMenuStrip.Items.AddRange(new ToolStripItem[] { this.captureImageMenuItem, this.exitMenuItem });
-            this.contextMenuStrip.Name = "contextMenuStrip";
+            contextMenuStrip.Items.AddRange(new ToolStripItem[] { captureImageMenuItem, exitMenuItem });
+            contextMenuStrip.Name = "contextMenuStrip";
 
-            this.contextMenuStrip.ResumeLayout(false);
+            contextMenuStrip.ResumeLayout(false);
 
-            this.notifyIcon = new NotifyIcon();
-            this.notifyIcon.BalloonTipText = "imgyazur";
-            this.notifyIcon.Text = defaultText;
-            this.notifyIcon.Visible = true;
-            this.notifyIcon.Icon = Properties.Resources.imgur;
-            this.notifyIcon.ContextMenuStrip = this.contextMenuStrip;
-            this.notifyIcon.MouseClick += new MouseEventHandler(notifyIcon_MouseClick);
+            notifyIcon = new NotifyIcon();
+            notifyIcon.BalloonTipText = "imgyazur";
+            notifyIcon.Text = defaultText;
+            notifyIcon.Visible = true;
+            notifyIcon.Icon = Properties.Resources.imgur;
+            notifyIcon.ContextMenuStrip = contextMenuStrip;
+            notifyIcon.MouseClick += new MouseEventHandler(notifyIcon_MouseClick);
+
+            keyCombo = keyComboSettings.ToKeyCombo();
 
             Hook KeyboardHook = new Hook("imgyazur keyboard hook");
             KeyboardHook.KeyDownEvent += GlobalKeyDown;
@@ -86,7 +90,8 @@ namespace imgyazur
 
         void GlobalKeyDown(KeyboardHookEventArgs e)
         {
-            if (e.Key == Keys.D && e.isCtrlPressed && e.isAltPressed && e.isShiftPressed)
+            KeyCombo pressedKeys = KeyCombo.FromKeyboardHookEventArgs(e);
+            if (keyCombo.Equals(pressedKeys))
                 startCapture();
         }
     }
