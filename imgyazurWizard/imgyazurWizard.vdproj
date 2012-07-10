@@ -68,6 +68,19 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
             }
         }
         "Release"
@@ -267,15 +280,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:imgyazur"
-        "ProductCode" = "8:{D4FD55C9-77E7-4A13-B801-4BC045F8035C}"
-        "PackageCode" = "8:{8DC4344F-6F23-46D0-A166-F6AE92A2708A}"
-        "UpgradeCode" = "8:{B8037124-D4F6-466D-BC70-0255266B04D2}"
+        "ProductCode" = "8:{74FCEA9B-DEE1-4372-BD6A-249935C863AB}"
+        "PackageCode" = "8:{0574B770-5EAD-45FB-B166-1E08AD1E1C31}"
+        "UpgradeCode" = "8:{1C01F46E-4501-4B5E-B864-6542DB16FE5A}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:FALSE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:1.0.1"
         "Manufacturer" = "8:Tittyfish Labs"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
