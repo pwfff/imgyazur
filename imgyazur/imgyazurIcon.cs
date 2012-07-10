@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.Win32;
 using FMUtils.KeyboardHook;
 
 namespace imgyazur
@@ -22,12 +23,15 @@ namespace imgyazur
             }
         }
 
+        RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
         public KeyComboSettings keyComboSettings = new KeyComboSettings();
 
         public NotifyIcon notifyIcon;
         public static string defaultText = "imgyazur";
 
         private ContextMenuStrip contextMenuStrip;
+        private ToolStripMenuItem startOnBootMenuItem;
         private ToolStripMenuItem changeHotkeyMenuItem;
         private ToolStripMenuItem exitMenuItem;
 
@@ -41,12 +45,22 @@ namespace imgyazur
             exitMenuItem.Text = "Exit";
             exitMenuItem.Click += new EventHandler(exitMenuItem_Click);
 
+            startOnBootMenuItem = new ToolStripMenuItem();
+            startOnBootMenuItem.Name = "startOnBootMenuItem";
+            startOnBootMenuItem.Text = "Start On Boot";
+            startOnBootMenuItem.CheckOnClick = true;
+            if (rkApp.GetValue("imgyazur") == null)
+                startOnBootMenuItem.Checked = false;
+            else
+                startOnBootMenuItem.Checked = true;
+            startOnBootMenuItem.CheckedChanged += new EventHandler(startOnBootMenuItem_CheckedChanged);
+
             changeHotkeyMenuItem = new ToolStripMenuItem();
             changeHotkeyMenuItem.Name = "changeHotkeyMenuItem";
             changeHotkeyMenuItem.Text = "Change Hotkey";
             changeHotkeyMenuItem.Click += new EventHandler(changeHotkeyMenuItem_Click);
 
-            contextMenuStrip.Items.AddRange(new ToolStripItem[] { changeHotkeyMenuItem, exitMenuItem });
+            contextMenuStrip.Items.AddRange(new ToolStripItem[] { startOnBootMenuItem, changeHotkeyMenuItem, exitMenuItem });
             contextMenuStrip.Name = "contextMenuStrip";
 
             contextMenuStrip.ResumeLayout(false);
@@ -61,6 +75,14 @@ namespace imgyazur
 
             Hook KeyboardHook = new Hook("imgyazur keyboard hook");
             KeyboardHook.KeyDownEvent += GlobalKeyDown;
+        }
+
+        void startOnBootMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            if (startOnBootMenuItem.Checked)
+                rkApp.SetValue("imgyazur", Application.ExecutablePath.ToString());
+            else
+                rkApp.DeleteValue("imgyazur");
         }
 
         void changeHotkeyMenuItem_Click(object sender, EventArgs e)

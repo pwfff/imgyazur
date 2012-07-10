@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "imgyazur", "imgyazur\imgyaz
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FMUtils.KeyboardHook", "FMUtils.KeyboardHook\FMUtils.KeyboardHook.csproj", "{32C9D946-D68A-4BEC-9FFF-D978215A5E1D}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "imgyazurWizard", "imgyazurWizard\imgyazurWizard.vdproj", "{697DC171-DB52-4B71-A54A-FF69029B7958}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,12 @@ Global
 		{32C9D946-D68A-4BEC-9FFF-D978215A5E1D}.Release|x64.Build.0 = Release|x64
 		{32C9D946-D68A-4BEC-9FFF-D978215A5E1D}.Release|x86.ActiveCfg = Release|x86
 		{32C9D946-D68A-4BEC-9FFF-D978215A5E1D}.Release|x86.Build.0 = Release|x86
+		{697DC171-DB52-4B71-A54A-FF69029B7958}.Debug|Any CPU.ActiveCfg = Debug
+		{697DC171-DB52-4B71-A54A-FF69029B7958}.Debug|x64.ActiveCfg = Debug
+		{697DC171-DB52-4B71-A54A-FF69029B7958}.Debug|x86.ActiveCfg = Debug
+		{697DC171-DB52-4B71-A54A-FF69029B7958}.Release|Any CPU.ActiveCfg = Release
+		{697DC171-DB52-4B71-A54A-FF69029B7958}.Release|x64.ActiveCfg = Release
+		{697DC171-DB52-4B71-A54A-FF69029B7958}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
