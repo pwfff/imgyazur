@@ -23,13 +23,12 @@ namespace imgyazur
         }
 
         public KeyComboSettings keyComboSettings = new KeyComboSettings();
-        public KeyCombo keyCombo;
 
         public NotifyIcon notifyIcon;
         public static string defaultText = "imgyazur";
 
         private ContextMenuStrip contextMenuStrip;
-        private ToolStripMenuItem captureImageMenuItem;
+        private ToolStripMenuItem changeHotkeyMenuItem;
         private ToolStripMenuItem exitMenuItem;
 
         private ImgyazurIcon()
@@ -42,12 +41,12 @@ namespace imgyazur
             exitMenuItem.Text = "Exit";
             exitMenuItem.Click += new EventHandler(exitMenuItem_Click);
 
-            captureImageMenuItem = new ToolStripMenuItem();
-            captureImageMenuItem.Name = "captureImageMenuItem";
-            captureImageMenuItem.Text = "Capture Image";
-            captureImageMenuItem.Click += new EventHandler(captureImageMenuItem_Click);
+            changeHotkeyMenuItem = new ToolStripMenuItem();
+            changeHotkeyMenuItem.Name = "changeHotkeyMenuItem";
+            changeHotkeyMenuItem.Text = "Change Hotkey";
+            changeHotkeyMenuItem.Click += new EventHandler(changeHotkeyMenuItem_Click);
 
-            contextMenuStrip.Items.AddRange(new ToolStripItem[] { captureImageMenuItem, exitMenuItem });
+            contextMenuStrip.Items.AddRange(new ToolStripItem[] { changeHotkeyMenuItem, exitMenuItem });
             contextMenuStrip.Name = "contextMenuStrip";
 
             contextMenuStrip.ResumeLayout(false);
@@ -60,10 +59,13 @@ namespace imgyazur
             notifyIcon.ContextMenuStrip = contextMenuStrip;
             notifyIcon.MouseClick += new MouseEventHandler(notifyIcon_MouseClick);
 
-            keyCombo = keyComboSettings.ToKeyCombo();
-
             Hook KeyboardHook = new Hook("imgyazur keyboard hook");
             KeyboardHook.KeyDownEvent += GlobalKeyDown;
+        }
+
+        void changeHotkeyMenuItem_Click(object sender, EventArgs e)
+        {
+            new formHotkey().ShowDialog();
         }
 
         void startCapture()
@@ -78,11 +80,6 @@ namespace imgyazur
                 startCapture();
         }
 
-        void captureImageMenuItem_Click(object sender, EventArgs e)
-        {
-            startCapture();
-        }
-
         void exitMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -91,7 +88,7 @@ namespace imgyazur
         void GlobalKeyDown(KeyboardHookEventArgs e)
         {
             KeyCombo pressedKeys = KeyCombo.FromKeyboardHookEventArgs(e);
-            if (keyCombo.Equals(pressedKeys))
+            if (pressedKeys.Equals(keyComboSettings.ToKeyCombo()))
                 startCapture();
         }
     }
