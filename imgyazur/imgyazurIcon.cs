@@ -30,8 +30,12 @@ namespace imgyazur
         public NotifyIcon notifyIcon;
         public static string defaultText = "imgyazur";
 
+        formImgyazur imgyazurForm = null;
+
         private ContextMenuStrip contextMenuStrip;
         private ToolStripMenuItem startOnBootMenuItem;
+        private ToolStripMenuItem copyAfterUploadMenuItem;
+        private ToolStripMenuItem openAfterUploadMenuItem;
         private ToolStripMenuItem changeHotkeyMenuItem;
         private ToolStripMenuItem exitMenuItem;
 
@@ -55,12 +59,26 @@ namespace imgyazur
                 startOnBootMenuItem.Checked = true;
             startOnBootMenuItem.CheckedChanged += new EventHandler(startOnBootMenuItem_CheckedChanged);
 
+            copyAfterUploadMenuItem = new ToolStripMenuItem();
+            copyAfterUploadMenuItem.Name = "copyAfterUploadMenuItem";
+            copyAfterUploadMenuItem.Text = "Copy URL After Upload";
+            copyAfterUploadMenuItem.CheckOnClick = true;
+            copyAfterUploadMenuItem.Checked = Properties.Settings.Default.copyToClipboard;
+            copyAfterUploadMenuItem.CheckedChanged += new EventHandler(copyAfterUploadMenuItem_CheckedChanged);
+
+            openAfterUploadMenuItem = new ToolStripMenuItem();
+            openAfterUploadMenuItem.Name = "openAfterUploadMenuItem";
+            openAfterUploadMenuItem.Text = "Open URL After Upload";
+            openAfterUploadMenuItem.CheckOnClick = true;
+            openAfterUploadMenuItem.Checked = Properties.Settings.Default.openAfterUpload;
+            openAfterUploadMenuItem.CheckedChanged += new EventHandler(openAfterUploadMenuItem_CheckedChanged);
+
             changeHotkeyMenuItem = new ToolStripMenuItem();
             changeHotkeyMenuItem.Name = "changeHotkeyMenuItem";
             changeHotkeyMenuItem.Text = "Change Hotkey";
             changeHotkeyMenuItem.Click += new EventHandler(changeHotkeyMenuItem_Click);
 
-            contextMenuStrip.Items.AddRange(new ToolStripItem[] { startOnBootMenuItem, changeHotkeyMenuItem, exitMenuItem });
+            contextMenuStrip.Items.AddRange(new ToolStripItem[] { startOnBootMenuItem, copyAfterUploadMenuItem, openAfterUploadMenuItem, changeHotkeyMenuItem, exitMenuItem });
             contextMenuStrip.Name = "contextMenuStrip";
 
             contextMenuStrip.ResumeLayout(false);
@@ -72,9 +90,22 @@ namespace imgyazur
             notifyIcon.Icon = Properties.Resources.imgur;
             notifyIcon.ContextMenuStrip = contextMenuStrip;
             notifyIcon.MouseClick += new MouseEventHandler(notifyIcon_MouseClick);
+            notifyIcon.ShowBalloonTip(10000, "imgyazur is now running", "Press " + keyComboSettings.ToKeyCombo().ToString() + " or click this icon to start capturing.", ToolTipIcon.Info);
 
             Hook KeyboardHook = new Hook("imgyazur keyboard hook");
             KeyboardHook.KeyDownEvent += GlobalKeyDown;
+        }
+
+        void openAfterUploadMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.openAfterUpload = openAfterUploadMenuItem.Checked;
+            Properties.Settings.Default.Save();
+        }
+
+        void copyAfterUploadMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.copyToClipboard = copyAfterUploadMenuItem.Checked;
+            Properties.Settings.Default.Save();
         }
 
         void startOnBootMenuItem_CheckedChanged(object sender, EventArgs e)
@@ -92,7 +123,10 @@ namespace imgyazur
 
         void startCapture()
         {
-            formImgyazur imgyazurForm = new formImgyazur();
+            if (imgyazurForm != null && !imgyazurForm.IsDisposed)
+                return;
+
+            imgyazurForm = new formImgyazur();
             imgyazurForm.Show();
         }
 

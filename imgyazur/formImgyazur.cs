@@ -135,6 +135,7 @@ namespace imgyazur
             // if we don't do this, the image turns out ugly and grey... duh
             captureForm.Opacity = 0;
             Opacity = 0;
+            Hide();
 
             Bitmap captureBitmap = new Bitmap(captureArea.Width, captureArea.Height);
             Graphics captureGraphics = Graphics.FromImage(captureBitmap);
@@ -205,7 +206,15 @@ namespace imgyazur
             }
 
             if (photos != null)
-                Process.Start(photos.upload.links.original);
+            {
+                if (Properties.Settings.Default.openAfterUpload)
+                    Process.Start(photos.upload.links.original);
+                if (Properties.Settings.Default.copyToClipboard)
+                {
+                    Clipboard.SetText(photos.upload.links.original);
+                    ImgyazurIcon.Instance.notifyIcon.ShowBalloonTip(10000, "Upload Complete", photos.upload.links.original + " copied to clipboard.", ToolTipIcon.Info);
+                }
+            }
         }
 
         void webClient_UploadProgressChanged(object sender, UploadProgressChangedEventArgs e)
