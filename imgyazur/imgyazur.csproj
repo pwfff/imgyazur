@@ -74,6 +74,7 @@
       <DependentUpon>formImgyazur.cs</DependentUpon>
     </Compile>
     <Compile Include="imgyazurIcon.cs" />
+    <Compile Include="KeyComboSettings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="formCaptureArea.resx">
