@@ -22,3 +22,5 @@ Compiling
 ---------
 
 If you don't have an apikey.cs with a 'public static string key =', **you're gonna have a bad time**.
+
+***The Imgur logo and "IMGUR" are trademarks of Imgur LLC and are used here for informational purposes only.  imgyazur is not affiliated with Imgur and has not been reviewed or approved by Imgur.***
