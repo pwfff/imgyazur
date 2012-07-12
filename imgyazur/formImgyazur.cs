@@ -185,6 +185,12 @@ namespace imgyazur
         {
             ImgyazurIcon.Instance.notifyIcon.Text = ImgyazurIcon.defaultText;
 
+            if (e.Error != null)
+            {
+                ImgyazurIcon.Instance.notifyIcon.ShowBalloonTip(10000, "Error Uploading Image", "An error occurred while uploading your image. Check your connection and try again, or give up. I don't care.", ToolTipIcon.Error);
+                return;
+            }
+
             byte[] responseArray = e.Result;
 
 #if DEBUG
